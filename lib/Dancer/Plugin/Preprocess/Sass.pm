@@ -197,7 +197,7 @@ If set to C<0>, then the CSS files are generated on-the-fly with every request.
 If set to C<1>, the files are generated once and saved, then served as static
 files later on.
 
-The files are saved in the same directory as the Sass/SCSS files, so the system
+CSS files are saved in the same directory as the Sass/SCSS files, so the system
 user that the web application is running as must be allowed to write to that
 directory.
 
