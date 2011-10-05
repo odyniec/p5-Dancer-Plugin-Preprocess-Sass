@@ -1,5 +1,11 @@
 package Dancer::Plugin::Preprocess::Sass;
 
+=head1 NAME
+
+Dancer::Plugin::Preprocess::Sass - Generate CSS files from Sass/SCSS files
+
+=cut
+
 use warnings;
 use strict;
 
@@ -8,12 +14,6 @@ use Dancer ':syntax';
 use Dancer::Plugin;
 use File::Spec::Functions qw(catfile);
 use Text::Sass;
-
-=head1 NAME
-
-Dancer::Plugin::Preprocess::Sass - Generate CSS files from Sass/SCSS files
-
-=cut
 
 our $VERSION = '0.01';
 
