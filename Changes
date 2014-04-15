@@ -1,5 +1,7 @@
 Revision history for Dancer-Plugin-Preprocess-Sass
 
-0.01    2011-09-20
-        First version, released on an unsuspecting world.
+{{$NEXT}}
+          Switched to using Dist::Zilla.
 
+0.01      2011-09-20
+          First version, released on an unsuspecting world.
