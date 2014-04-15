@@ -16,7 +16,7 @@ use Text::Sass;
 my $settings = plugin_setting;
 
 my $sass = Text::Sass->new;
-my $public_dir = abs_path(setting('public'));
+my $public_dir = abs_path(setting('public') || '');
 
 my $paths;
 
