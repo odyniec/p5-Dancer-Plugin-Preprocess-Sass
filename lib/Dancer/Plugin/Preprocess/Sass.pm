@@ -52,7 +52,7 @@ sub _process_sass_file {
         $method = 'scss2css';
     }
     else {
-        return undef;
+        return;
     }
     
     open (my $f, '<', $sass_file);
