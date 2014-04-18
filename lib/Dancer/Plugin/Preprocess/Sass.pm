@@ -14,11 +14,10 @@ use File::Spec::Functions qw(catfile);
 use Text::Sass;
 
 my $settings = plugin_setting;
+my $paths;
 
 my $sass = Text::Sass->new;
 my $public_dir = abs_path(setting('public') || '');
-
-my $paths;
 
 if (exists $settings->{paths}) {
     $paths = $settings->{paths};
@@ -39,7 +38,11 @@ for my $path (@fs_paths) {
 }
 
 # Make a regular expression to match URL paths
-my $paths_re = join '|', map { quotemeta } @$paths;
+my $paths_re = join '|', map {
+    s{^[^/]}{/$&};      # Add leading slash, if missing
+    s{/$}{};            # Remove trailing slash
+    quotemeta;
+} reverse sort @$paths;
 
 sub _process_sass_file {
     my $sass_file = shift;
@@ -78,7 +81,7 @@ hook before_file_render => sub {
     
     my $path_re = '^' . quotemeta(catfile($public_dir, "")) .
         '(?:' . $fs_paths_re . ')';
-    
+
     if ($path =~ qr{$path_re} && $path =~ qr{\.css$}) {
         (my $filename = $path) =~ s/\.css$//;
         my $input_file;
@@ -100,10 +103,9 @@ hook before_file_render => sub {
     }
 };
 
-# FIXME: This doesn't allow us to have "/" as path, does it?
-get qr{/($paths_re)/(.*)} => sub {
+get qr{($paths_re)/([^/]*\.css)} => sub {
     my ($path, $css_file) = splat;
-    
+
     # Prepend the path to the CSS file name
     $path = catfile(split('/', $path));
     $css_file = catfile($path, $css_file);
@@ -113,7 +115,7 @@ get qr{/($paths_re)/(.*)} => sub {
     
     (my $filename = $css_file_abs) =~ s/\.css$//;
     my $input_file;
-    
+
     if (-f ($input_file = $filename . '.sass') ||
         -f ($input_file = $filename . '.scss'))
     {
