@@ -29,11 +29,13 @@ else {
 # Translate URL paths to filesystem paths
 my @fs_paths = map { catfile(split('/'), "") } @$paths;
 
-# Check if the directories are writable
-for my $path (@fs_paths) {
-    $path = catfile($public_dir, $path);
-    if (!-w $path) {
-        warning __PACKAGE__ . ": Can't write to $path";
+if ($settings->{save}) {
+    # Check if the directories are writable
+    for my $path (@fs_paths) {
+        $path = catfile($public_dir, $path);
+        if (!-w $path) {
+            warning __PACKAGE__ . ": Can't write to $path";
+        }
     }
 }
 
