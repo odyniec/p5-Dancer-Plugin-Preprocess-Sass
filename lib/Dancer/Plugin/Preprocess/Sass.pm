@@ -41,9 +41,10 @@ if ($settings->{save}) {
 
 # Make a regular expression to match URL paths
 my $paths_re = join '|', map {
-    s{^[^/]}{/$&};      # Add leading slash, if missing
-    s{/$}{};            # Remove trailing slash
-    quotemeta;
+    my $s = $_;
+    $s =~ s{^[^/]}{/$&};    # Add leading slash, if missing
+    $s =~ s{/$}{};          # Remove trailing slash
+    quotemeta $s;
 } reverse sort @$paths;
 
 sub _process_sass_file {
