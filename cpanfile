@@ -8,6 +8,8 @@ requires "strict" => "0";
 requires "warnings" => "0";
 
 on 'test' => sub {
+  requires "Dancer::FileUtils" => "0";
+  requires "Dancer::Test" => "0";
   requires "ExtUtils::MakeMaker" => "0";
   requires "File::Spec" => "0";
   requires "File::Temp" => "0";
