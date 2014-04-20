@@ -32,9 +32,9 @@ my @fs_paths = map { catfile(split('/'), "") } @$paths;
 if ($settings->{save}) {
     # Check if the directories are writable
     for my $path (@fs_paths) {
-        $path = catfile($public_dir, $path);
-        if (!-w $path) {
-            warning __PACKAGE__ . ": Can't write to $path";
+        my $full_path = catfile($public_dir, $path);
+        if (!-w $full_path) {
+            warning __PACKAGE__ . ": Can't write to $full_path";
         }
     }
 }
